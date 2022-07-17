@@ -1,0 +1,26 @@
+<!DOCTYPE web-app PUBLIC
+ "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+ "http://java.sun.com/dtd/web-app_2_3.dtd" >
+<!--корневой элемент, всегда одинаковый-->
+<web-app
+        xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
+                 version="4.0">
+  <display-name>Archetype Created Web Application</display-name>
+  <response-character-encoding>UTF-8</response-character-encoding>
+  <!--определение сервлета -->
+<servlet>
+  <servlet-name>main</servlet-name>
+  <servlet-class>mycode.MainServlet</servlet-class>
+  <load-on-startup>1</load-on-startup><!-- 1 вкл серврлет(загружается при старте), 0 выкл -->
+</servlet>
+  <!-- настройка сервлета mapping -->
+  <servlet-mapping>
+    <servlet-name>main</servlet-name>
+    <url-pattern>/</url-pattern>
+  </servlet-mapping>
+</web-app>
+
+
+
