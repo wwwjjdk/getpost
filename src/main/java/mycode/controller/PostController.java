@@ -37,18 +37,9 @@ public class PostController {
         response.setContentType(APPLICATION_JSON);
         final var gson = new Gson();
         final var post = gson.fromJson(body, Post.class);//само заполняет класс
-        
-        if (post.getId() == 0) {
-            post.setId((int) Math.floor(Math.random() * 10000));
-            final var data = service.save(post);
-            response.getWriter().print(gson.toJson(data));
-        } else if (post.getId() != 0) {
-            if (service.all().containsKey(post.getId())) {
-                service.removeById(post.getId());
-                final var data = service.save(post);
-                response.getWriter().print(gson.toJson(data));
-            }
-        }
+        final var data = service.save(post);
+        response.getWriter().print(gson.toJson(data));
+
     }
 
     public void removeById(long id, HttpServletResponse response) throws IOException {

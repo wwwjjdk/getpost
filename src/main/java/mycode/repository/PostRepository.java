@@ -1,5 +1,6 @@
 package mycode.repository;
 
+import mycode.exceprtion.NotFoundException;
 import mycode.model.Post;
 
 import java.util.*;
@@ -15,16 +16,33 @@ public class PostRepository {
 
     public Optional<String> getById(long id) {
         //return Optional.ofNullable(map.get(id));
-        return Optional.ofNullable(map.get(id));
+        if(map.containsKey(id)){
+            return Optional.of(map.get(id));
+        }
+        return Optional.empty();
     }
 
     public Post save(Post post) {
-        map.put(post.getId(), post.getContent());
+        if(post.getId()==0){
+            post.setId((long)Math.floor(Math.random()*10000));
+            map.put(post.getId(), post.getContent());
+        }else if(post.getId()!=0){
+            if(map.containsKey(post.getId())){
+                map.remove(post.getId());
+                map.put(post.getId(), post.getContent());
+            }else{
+                throw new NotFoundException("Post not saved {id:" + post.getId() + "}");
+            }
+        }
         return post;
     }
 
     public void removeById(long id) {
-        map.remove(id);
+        if(map.containsKey(id)){
+            map.remove(id);
+        }else{
+            throw new NotFoundException("Post not found {id:" + id + "}");
+        }
     }
 
 }
