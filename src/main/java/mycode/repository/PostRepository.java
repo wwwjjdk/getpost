@@ -2,11 +2,13 @@ package mycode.repository;
 
 import mycode.exceprtion.NotFoundException;
 import mycode.model.Post;
+import org.springframework.stereotype.Repository;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 //класс хранения данных
+@Repository
 public class PostRepository {
     protected ConcurrentHashMap<Long, String> map = new ConcurrentHashMap();
     //вывод всех мапы
