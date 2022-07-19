@@ -28,13 +28,16 @@ public class PostController {
 
     public void getById(long id, HttpServletResponse response) throws IOException {
         // TODO: deserialize request & serialize response
-        try{
-            response.setContentType(APPLICATION_JSON);
-            final var data = service.getById(id);
-            response.getWriter().print(gson.toJson(data));
-        }catch (NotFoundException e){
-            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-        }
+
+            try{
+                response.setContentType(APPLICATION_JSON);
+                final var data = service.getById(id);
+                response.getWriter().print(gson.toJson(data));
+            }catch (NotFoundException e){
+                response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+            }
+
+
     }
 
     public void save(Reader body, HttpServletResponse response) throws IOException {
