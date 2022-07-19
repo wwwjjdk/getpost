@@ -27,16 +27,8 @@ public class PostService {
         return repository.save(post);
     }
 
-    public void removeById(long id) {
-        repository.removeById(id);
+    public boolean removeById(long id) {
+        return repository.removeById(id);
     }
-    public void searchAndChange(Post post){
-        if(post.getId() ==0){
-            post.setId((long)Math.floor(Math.random()*10000));
-        }else if(post.getId() !=0){
-          if(repository.all().containsKey(post.getId())){
-             repository.removeById(post.getId());
-          }
-        }
-    }
+
 }

@@ -7,7 +7,7 @@ import mycode.service.PostService;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
+
 
 public class MainServlet extends HttpServlet {
     private PostController controller;
@@ -20,10 +20,7 @@ public class MainServlet extends HttpServlet {
     }
 
     @Override
-    // protected private public
     protected void service(HttpServletRequest req, HttpServletResponse res) {
-        /*res.setStatus(HttpServletResponse.SC_NOT_FOUND);
-        res.getWriter().print("h3110 4m my m1nd");*/
         try {
             final var path = req.getRequestURI(); //uri url urn
             final var method = req.getMethod(); //get post etc

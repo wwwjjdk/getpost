@@ -9,17 +9,13 @@ import java.util.concurrent.ConcurrentHashMap;
 //класс хранения данных
 public class PostRepository {
     protected ConcurrentHashMap<Long, String> map = new ConcurrentHashMap();
-    //вывод всех мапы
+
     public ConcurrentHashMap<Long, String> all() {
-        return map;//Collections.emptyList(); //заглушка, возвращает пустой список
+        return map;
     }
 
     public Optional<String> getById(long id) {
-        //return Optional.ofNullable(map.get(id));
-        if(map.containsKey(id)){
-            return Optional.of(map.get(id));
-        }
-        return Optional.empty();
+        return Optional.ofNullable(map.get(id));
     }
 
     public Post save(Post post) {
@@ -37,11 +33,12 @@ public class PostRepository {
         return post;
     }
 
-    public void removeById(long id) {
+    public boolean removeById(long id) {
         if(map.containsKey(id)){
             map.remove(id);
+            return true;
         }else{
-            throw new NotFoundException("Post not found {id:" + id + "}");
+            return false;
         }
     }
 

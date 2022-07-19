@@ -2,6 +2,7 @@ package mycode.controller;
 
 
 import com.google.gson.Gson;
+import mycode.exceprtion.NotFoundException;
 import mycode.model.Post;
 import mycode.service.PostService;
 
@@ -13,6 +14,7 @@ import java.io.Reader;
 public class PostController {
     public static final String APPLICATION_JSON = "application/json";
     private final PostService service;
+    final Gson gson = new Gson();
 
     public PostController(PostService service) {
         this.service = service;
@@ -21,21 +23,22 @@ public class PostController {
     public void all(HttpServletResponse response) throws IOException {
         response.setContentType(APPLICATION_JSON);
         final var data = service.all();
-        final var gson = new Gson();
         response.getWriter().print(gson.toJson(data));
     }
 
     public void getById(long id, HttpServletResponse response) throws IOException {
         // TODO: deserialize request & serialize response
-        response.setContentType(APPLICATION_JSON);
-        final var gson = new Gson();
-        final var data = service.getById(id);
-        response.getWriter().print(gson.toJson(data));
+        try{
+            response.setContentType(APPLICATION_JSON);
+            final var data = service.getById(id);
+            response.getWriter().print(gson.toJson(data));
+        }catch (NotFoundException e){
+            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+        }
     }
 
     public void save(Reader body, HttpServletResponse response) throws IOException {
         response.setContentType(APPLICATION_JSON);
-        final var gson = new Gson();
         final var post = gson.fromJson(body, Post.class);//само заполняет класс
         final var data = service.save(post);
         response.getWriter().print(gson.toJson(data));
@@ -44,10 +47,15 @@ public class PostController {
 
     public void removeById(long id, HttpServletResponse response) throws IOException {
         // TODO: deserialize request & serialize response
-        response.setContentType(APPLICATION_JSON);
-        final var gson = new Gson();
-        service.removeById(id);
-        response.getWriter().printf(gson.toJson("объект с id[%s] удален"), id);
+            response.setContentType(APPLICATION_JSON);
+            boolean answer = service.removeById(id);
+            if(answer){
+                response.getWriter().printf(gson.toJson("объект с id[%s] удален"), id);
+            }else{
+                response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+            }
+
+
     }
 
 }
