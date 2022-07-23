@@ -15,11 +15,11 @@ public class PostService {
         this.repository = repository;
     }
 
-    public ConcurrentHashMap<Long, String> all() {
+    public Collection<Post> all() {
         return repository.all();
     }
 
-    public String getById(long id) {
+    public Post getById(long id) {
         return repository.getById(id).orElseThrow(NotFoundException::new);
     }
 
